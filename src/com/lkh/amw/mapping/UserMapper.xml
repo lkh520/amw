@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lkh.amw.IDao.UserMapper" >
+    <resultMap id="BaseResultMap" type="com.lkh.amw.pojo.User" >
+        <id column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="pass_word" property="passWord" jdbcType="VARCHAR" />
+        <result column="show_name" property="showName" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    user_id, user_name, pass_word, show_name
+    </sql>
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="userId" parameterType="com.lkh.amw.pojo.User" >
+    insert into tamw_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
+        user_id,
+            </if>
+            <if test="userName != null" >
+        user_name,
+            </if>
+            <if test="passWord != null" >
+        pass_word,
+            </if>
+            <if test="showName != null" >
+        show_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="passWord != null" >
+        #{passWord,jdbcType=VARCHAR},
+            </if>
+            <if test="showName != null" >
+        #{showName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="selectLogin" resultMap="BaseResultMap" parameterType="String">
+    select
+        <include refid="Base_Column_List" /> 
+    from tamw_user
+    where user_name = #{username,jdbcType=VARCHAR}
+    </select>
+  
+  
+    <select id="selectId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select 
+        <include refid="Base_Column_List" /> 
+    from tamw_user
+    where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+        <include refid="Base_Column_List" />
+    from tamw_user
+    where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+</mapper>
